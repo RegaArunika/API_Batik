@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kemeja;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 
 class KemejaController extends Controller
@@ -131,5 +132,10 @@ class KemejaController extends Controller
                 'errors'=>$e->getMessage()
             ]);
         }
+    }
+
+    function listSeller(){
+        $data=Seller::all();
+        return response()->json($data);
     }
 }

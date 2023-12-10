@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\KemejaController;
+use App\Http\Controllers\API\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => 'auth:sanctum'], function() {
+         Route::resource('kemeja', KemejaController::class);
+         Route::post('/kemeja/{id}', [KemejaController::class, 'update']);
+         Route::get('/listseller', [KemejaController::class, 'listSeller']);
 });
 
-Route::resource('kemeja', KemejaController::class);
-Route::post('/kemeja/{id}', [KemejaController::class, 'update']);
+
